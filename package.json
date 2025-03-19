@@ -1,0 +1,38 @@
+{
+  "name": "idomods",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.8.3",
+    "basic-auth": "^2.0.1",
+    "cron": "^4.1.0",
+    "csv-writer": "^1.6.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "json2csv": "^6.0.0-alpha.2",
+    "mongoose": "^8.12.1",
+    "node-cron": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/basic-auth": "^1.1.8",
+    "@types/cron": "^2.4.3",
+    "@types/express": "^5.0.0",
+    "@types/json2csv": "^5.0.7",
+    "@types/node": "^22.13.10",
+    "@types/node-cron": "^3.0.11",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  },
+  "description": ""
+}
