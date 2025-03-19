@@ -9,11 +9,11 @@ export const config = {
     server: {
         port: process.env.PORT || 3000,
         basicAuth: {
-            username: process.env.BASIC_AUTH_USER,
-            password: process.env.BASIC_AUTH_PASS
+            username: process.env.BASIC_AUTH_USER || "",
+            password: process.env.BASIC_AUTH_PASS || ""
         }
     },
     db: {
-        uri: process.env.MONGO_URI
+        uri: process.env.MONGO_URI || ""
     }
 };
