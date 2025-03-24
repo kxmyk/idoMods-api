@@ -44,7 +44,7 @@ Aplikacja będzie dostępna na `http://localhost:3000`.
 
 ### 1️⃣ Pobieranie zamówień z API IdoSell
 - Zamówienia są pobierane raz przy uruchomieniu serwera
-- Codziennie o północy (00:00)
+- Automatyczne pobieranie zamówień co godzinę
 
 ### 2️⃣ Przechowywanie zamówień w MongoDB
 - Jeśli zamówienie już istnieje, jest aktualizowane
@@ -120,3 +120,12 @@ Możesz użyć **Postmana**, **cURL**, lub skryptu Node.js.
 - Wsparcie dla webhooków z IdoSell
 - Panel administracyjny do zarządzania zamówieniami  
 
+## 📌 Zmiany w wersji 2.0
+
+### ✅ Poprawki i ulepszenia:
+- 🔄 Pobieranie zamówień:
+Usunięto limit 100 zamówień – teraz pobierane są wszystkie.
+Optymalizacja pobierania zamówień z API IdoSell.
+
+- ⏳ Automatyzacja pobierania zamówień:
+Zamiast raz dziennie o północy, zamówienia są teraz pobierane co godzinę.
