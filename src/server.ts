@@ -14,7 +14,7 @@ mongoose.connect(config.db.uri)
     .then(() => console.log("Connected to MongoDB"))
     .catch((error) => console.error("MongoDB connection error:", error));
 
-cron.schedule("0 0 * * *", async () => {
+cron.schedule("0 * * * *", async () => {
     try {
         const orders = await fetchOrdersFromIdoSell();
         await saveOrders(orders);
