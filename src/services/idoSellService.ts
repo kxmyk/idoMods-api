@@ -1,29 +1,56 @@
-import axios from "axios";
-import { config } from "../config";
+import axios from 'axios';
+import {config} from '../config';
 
 export const fetchOrdersFromIdoSell = async () => {
     try {
-        const response = await axios.get(`${config.idoSellAPI.baseUrl}/orders/orders?limit=`, {
-            headers: {
-                "X-API-KEY": config.idoSellAPI.apiKey,
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-        });
+        let allOrders: any[] = [];
+        let page = 0;
+        const resultsLimit = 100;
+        let totalResults = 0;
 
-        if (!response.data.Results || response.data.Results.length === 0) {
-            throw new Error("Brak zamówień w odpowiedzi API");
-        }
+        do {
+            const response = await axios.post(
+                `${config.idoSellAPI.baseUrl}/orders/orders/search`,
+                {
+                    params: {
+                        ordersBy: [{sortDirection: 'ASC'}],
+                        resultsPage: page,
+                        resultsLimit: resultsLimit,
+                    },
+                },
+                {
+                    headers: {
+                        'X-API-KEY': config.idoSellAPI.apiKey,
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
 
-        return response.data.Results.map((order: any) => ({
-            orderID: order.orderId,
-            products: order.orderDetails.productsResults.map((p: any) => ({
-                productID: p.productId,
-                quantity: p.productQuantity,
-            })),
-            orderWorth: order.orderDetails.payments.orderBaseCurrency.orderProductsCost,
-        }));
-    } catch (error) {
-        throw new Error("Nie udało się pobrać zamówień z IdoSell.");
+            if (!response.data.Results || response.data.Results.length === 0) {
+                break;
+            }
+
+            allOrders.push(
+                ...response.data.Results.map((order: any) => ({
+                    orderID: order.orderId,
+                    products: order.orderDetails.productsResults.map((p: any) => ({
+                        productID: p.productId,
+                        quantity: p.productQuantity,
+                    })),
+                    orderWorth: order.orderDetails.payments.orderBaseCurrency.orderProductsCost,
+                }))
+            );
+
+            totalResults = response.data.resultsNumberAll;
+            page++;
+
+        } while (allOrders.length < totalResults);
+
+        return allOrders;
+
+    } catch (error: any) {
+        console.error('Błąd API:', error?.response?.data || error?.message || error);
+        throw new Error('Nie udało się pobrać zamówień z IdoSell.');
     }
 };
